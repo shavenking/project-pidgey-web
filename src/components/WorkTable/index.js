@@ -47,9 +47,11 @@ export default class WorkTable extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleClick = this.handleClick.bind(this)
         this.hideModal = this.hideModal.bind(this)
+        this.deleteWork = this.deleteWork.bind(this)
         this.state = {
             works: [],
-            showModal: false
+            showModal: false,
+            openDropdownId: null
         }
     }
 
@@ -82,6 +84,16 @@ export default class WorkTable extends Component {
         this.setState({showModal: false})
     }
 
+    deleteWork(e, workId) {
+        e.preventDefault()
+
+        fetch(`/api/v1/works/${workId}`, {method: 'DELETE'}).then(() => {
+            this.setState({
+                works: this.state.works.filter(work => work.id != workId)
+            })
+        })
+    }
+
     componentDidMount() {this.fetchWorks()}
 
     render() {
@@ -90,7 +102,7 @@ export default class WorkTable extends Component {
             <div className="card h-100">
                 <div className="card-header">工作項目列表</div>
                 <div className="card-block">
-                    <button type="button" className="btn btn-success pull-right" onClick={this.handleClick}>新增工項</button>
+                    <button type="button" className="btn btn-success" onClick={this.handleClick}>新增工項</button>
 
                     {hasData || <AlertEmpty className="mb-0 mt-3">請點選「新增工項」！</AlertEmpty>}
 
@@ -103,6 +115,7 @@ export default class WorkTable extends Component {
                                     <th>單價</th>
                                     <th>工程類別</th>
                                     <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,6 +126,13 @@ export default class WorkTable extends Component {
                                         <td>{unit_price}</td>
                                         <td>{engineering_type.main_title} - {engineering_type.detailing_title}</td>
                                         <td><Link to={`settings/work-item-dashboard?work_id=${id}`}>單價分析表</Link></td>
+                                        <td>
+                                            <div className="btn-group btn-group-sm">
+                                                <button type="button" className="btn btn-secondary" onClick={(e) => this.deleteWork(e, id)}>
+                                                    <i className="fa fa-trash" /> 刪除
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

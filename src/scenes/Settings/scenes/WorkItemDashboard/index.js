@@ -26,6 +26,10 @@ const createWorkItem = function (workId, form) {
     }).then(rep => rep.json())
 }
 
+const deleteWorkItem = function (workId, workItemId) {
+    return fetch(`/api/v1/works/${workId}/work-items/${workItemId}`, {method: 'DELETE'})
+}
+
 export default class WorkItemDashboard extends Component {
     constructor(props) {
         super(props)
@@ -34,6 +38,7 @@ export default class WorkItemDashboard extends Component {
         this.hideModal = this.hideModal.bind(this)
         this.openModal = this.openModal.bind(this)
         this.fetchData = this.fetchData.bind(this)
+        this.onDelete = this.onDelete.bind(this)
 
         this.state = {
             workItems: [],
@@ -41,6 +46,12 @@ export default class WorkItemDashboard extends Component {
             stats: [],
             showModal: false
         }
+    }
+
+    onDelete(workItemId) {
+        deleteWorkItem(this.props.location.query.work_id, workItemId).then(() => {
+            this.fetchData()
+        })
     }
 
     onSubmit(form) {
@@ -85,8 +96,8 @@ export default class WorkItemDashboard extends Component {
                 <div className="col-9 col-lg-10">
                     <div className="row">
                         <div className="col-12">
-                            <WorkItemTable workItems={this.state.workItems}>
-                                <button type="button" className="btn btn-success pull-right" onClick={this.openModal}>新增工料項目</button>
+                            <WorkItemTable workItems={this.state.workItems} onDelete={this.onDelete}>
+                                <button type="button" className="btn btn-success" onClick={this.openModal}>新增工料項目</button>
 
                                 <Modal show={this.state.showModal}>
                                     <CreateWorkItemForm suggestions={this.state.suggestions} onCancel={this.hideModal} onSubmit={this.onSubmit} />
