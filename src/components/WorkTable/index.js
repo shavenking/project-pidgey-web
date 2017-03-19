@@ -150,10 +150,6 @@ export default class WorkTable extends Component {
                                 <input type="text" className="form-control" name="amount" />
                             </div>
                             <div className="form-group">
-                                <label>單價</label>
-                                <input type="text" className="form-control" name="unit_price" value="0" disabled />
-                            </div>
-                            <div className="form-group">
                                 <label>工程類別</label>
                                 <EngineeringTypeSelect />
                             </div>
