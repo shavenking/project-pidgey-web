@@ -3,12 +3,6 @@ import UnitSelect from 'components/UnitSelect'
 import CostTypeSelect from 'components/CostTypeSelect'
 import formSerialize from 'form-serialize'
 
-const fetchWorkItems = function () {
-    return fetch(`/api/v1/work-items`, {
-        method: 'GET'
-    }).then(rep => rep.json())
-}
-
 export default class CreateWorkItemForm extends Component {
     constructor(props) {
         super(props)
@@ -33,17 +27,14 @@ export default class CreateWorkItemForm extends Component {
         }
 
        const form = formSerialize(e.target, {hash: true})
-       fetch(`/api/v1/works/${this.props.workId}/work-items`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(form)
-       }).then(rep => rep.json()).then(({data}) => {
-            if (this.props.afterSubmit) {
-                this.props.afterSubmit(data)
-            }
-       })
+
+       if (this.props.onSubmit && false === this.props.onSubmit(form)) {
+            return false
+       }
+
+       if (this.props.afterSubmit) {
+            this.props.afterSubmit()
+       }
     }
 
     onCancel(e) {
@@ -59,11 +50,11 @@ export default class CreateWorkItemForm extends Component {
 
         if (!newName.length) {
             this.setState({
-                topFiveSuggestions: this.state.allSuggestions.slice(0, 5)
+                topFiveSuggestions: this.props.suggestions.slice(0, 5)
             })
         }
 
-        const topFiveSuggestions = this.state.allSuggestions.filter(function ({name}) {
+        const topFiveSuggestions = this.props.suggestions.filter(function ({name}) {
             return name.indexOf(newName) !== -1
         }).slice(0, 5)
 
@@ -76,13 +67,12 @@ export default class CreateWorkItemForm extends Component {
         this.setState({selectedId})
     }
 
-    componentDidMount() {
-        fetchWorkItems().then(({data}) => {
+    componentWillReceiveProps(nextProps) {
+        if (this.props.suggestions !== nextProps.suggestions) {
             this.setState({
-                allSuggestions: data,
-                topFiveSuggestions: data.slice(0, 5)
+                topFiveSuggestions: nextProps.suggestions.slice(0, 5)
             })
-        })
+        }
     }
 
     render() {
