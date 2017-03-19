@@ -6,7 +6,7 @@ export default class WorkItemStatsTable extends Component {
         const hasData = !!this.props.stats.length
 
         return (
-            <div className="card">
+            <div className="card h-100">
                 <div className="card-header">花費類型統計表</div>
                 <div className="card-block">
                     {!hasData && <AlertEmpty className="mb-0">新增工料項目後，會自動產生統計表！</AlertEmpty>}

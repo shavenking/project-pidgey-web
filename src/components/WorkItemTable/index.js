@@ -8,7 +8,7 @@ export default class WorkItemTable extends Component {
         const hasData = !!workItems.length
 
         return (
-            <div className="card">
+            <div className="card h-100">
                 <div className="card-header">單價分析表</div>
                 <div className="card-block">
                     {this.props.children}

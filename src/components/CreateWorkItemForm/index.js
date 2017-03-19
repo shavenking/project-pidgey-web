@@ -117,7 +117,7 @@ export default class CreateWorkItemForm extends Component {
                     </CostTypeSelect>
                 )}
                 <button type="submit" className="btn btn-success">新增工項</button>
-                <button type="button" className="btn btn-default ml-2" onClick={this.onCancel}>取消</button>
+                <button type="button" className="btn btn-secondary ml-2" onClick={this.onCancel}>取消</button>
             </form>
         )
     }

@@ -46,6 +46,7 @@ export default class WorkTable extends Component {
         this.fetchWorks = this.fetchWorks.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleClick = this.handleClick.bind(this)
+        this.hideModal = this.hideModal.bind(this)
         this.state = {
             works: [],
             showModal: false
@@ -75,12 +76,18 @@ export default class WorkTable extends Component {
         this.setState({showModal: true})
     }
 
+    hideModal(e) {
+        e.preventDefault()
+
+        this.setState({showModal: false})
+    }
+
     componentDidMount() {this.fetchWorks()}
 
     render() {
         const hasData = !!this.state.works.length
         return (
-            <div className="card">
+            <div className="card h-100">
                 <div className="card-header">工作項目列表</div>
                 <div className="card-block">
                     <button type="button" className="btn btn-success pull-right" onClick={this.handleClick}>新增工項</button>
@@ -131,6 +138,7 @@ export default class WorkTable extends Component {
                                 <EngineeringTypeSelect />
                             </div>
                             <button type="submit" className="btn btn-success">新增工項</button>
+                            <button type="button" className="btn btn-secondary ml-2" onClick={this.hideModal}>取消</button>
                         </form>
                     </Modal>
                 </div>
