@@ -100,11 +100,11 @@ export default class CreateWorkItemForm extends Component {
                 </div>
                 <div className="form-group">
                     <label>數量</label>
-                    <input type="text" className="form-control" name="amount" />
+                    <input type="text" className="form-control" name="amount" autoComplete="off" />
                 </div>
                 <div className="form-group">
                     <label>單價</label>
-                    <input type="text" className="form-control" name="unit_price" />
+                    <input type="text" className="form-control" name="unit_price" autoComplete="off" />
                 </div>
                 {!!this.state.selectedId || (
                     <UnitSelect value={this.state.unit_id} disabled={!!this.state.cost_type_id}>

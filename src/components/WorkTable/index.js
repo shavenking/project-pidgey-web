@@ -143,11 +143,11 @@ export default class WorkTable extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <div className="form-group">
                                 <label>名稱</label>
-                                <input type="text" className="form-control" name="name" />
+                                <input type="text" className="form-control" name="name" autoComplete="off" />
                             </div>
                             <div className="form-group">
                                 <label>數量</label>
-                                <input type="text" className="form-control" name="amount" />
+                                <input type="text" className="form-control" name="amount" autoComplete="off" />
                             </div>
                             <div className="form-group">
                                 <label>工程類別</label>
