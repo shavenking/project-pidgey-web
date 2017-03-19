@@ -4,6 +4,7 @@ import WorkItemTable from 'components/WorkItemTable'
 import WorkItemStatsTable from 'components/WorkItemStatsTable'
 import Modal from 'components/Modal'
 import CreateWorkItemForm from 'components/CreateWorkItemForm'
+import WorkItemStatsChart from 'components/WorkItemStatsChart'
 
 const fetchWorkItems = function (workId) {
     if (!workId) {
@@ -65,7 +66,7 @@ export default class WorkItemDashboard extends Component {
         })
 
         fetchWorkItemStats(workId).then(({data}) => {
-            this.setState({stats: data})
+            this.setState({stats: data.sort((a, b) => b.sum - a.sum)})
         })
 
         fetchWorkItems().then(({data}) => {
@@ -94,6 +95,9 @@ export default class WorkItemDashboard extends Component {
                         </div>
                         <div className="col-6 mt-3">
                             <WorkItemStatsTable stats={this.state.stats} />
+                        </div>
+                        <div className="col-6 mt-3">
+                            <WorkItemStatsChart stats={this.state.stats} />
                         </div>
                     </div>
                 </div>

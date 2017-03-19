@@ -21,7 +21,7 @@ export default class WorkItemStatsTable extends Component {
                             </thead>
                             <tbody>
                                 {this.props.stats.map(stats => (
-                                    <tr>
+                                    <tr key={stats.cost_type_id}>
                                         <td>{stats.cost_type_name}</td>
                                         <td>{stats.sum}</td>
                                     </tr>
