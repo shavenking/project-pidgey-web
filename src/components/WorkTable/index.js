@@ -3,6 +3,8 @@ import {Link} from 'react-router'
 import {AlertEmpty} from 'components/Alert'
 import Modal from 'components/Modal'
 import formSerialize from 'form-serialize'
+import Work from 'resources/Work'
+import EngineeringType from 'resources/EngineeringType'
 
 class EngineeringTypeSelect extends Component {
     constructor(props) {
@@ -15,7 +17,7 @@ class EngineeringTypeSelect extends Component {
     }
 
     fetchEngineeringTypes() {
-        fetch(`/api/v1/engineering-types`, {method: 'GET'}).then(rep => rep.json()).then(({data}) => {
+        EngineeringType.list().then(({data}) => {
             this.setState({engineeringTypes: data})
         })
     }
@@ -29,14 +31,6 @@ class EngineeringTypeSelect extends Component {
 
         return <select className="form-control" name="engineering_type_id">{options}</select>
     }
-}
-
-const createWork = function (form) {
-    return fetch(`/api/v1/works`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(form)
-    })
 }
 
 export default class WorkTable extends Component {
@@ -56,7 +50,7 @@ export default class WorkTable extends Component {
     }
 
     fetchWorks() {
-        return fetch(`/api/v1/works`, {method: 'GET'}).then(rep => rep.json()).then(({data}) => {
+        return Work.list().then(({data}) => {
             this.setState({works: data})
         })
     }
@@ -66,7 +60,7 @@ export default class WorkTable extends Component {
 
         const form = formSerialize(e.target, {hash: true})
 
-        createWork(form).then(rep => rep.json()).then(() => {
+        Work.create(form).then(() => {
             this.fetchWorks()
             this.setState({showModal: false})
         })
@@ -87,7 +81,7 @@ export default class WorkTable extends Component {
     deleteWork(e, workId) {
         e.preventDefault()
 
-        fetch(`/api/v1/works/${workId}`, {method: 'DELETE'}).then(() => {
+        Work.delete(workId).then(() => {
             this.setState({
                 works: this.state.works.filter(work => work.id != workId)
             })

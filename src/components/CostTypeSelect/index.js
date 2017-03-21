@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import CostType from 'resources/CostType'
 
 export default class CostTypeSelect extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class CostTypeSelect extends Component {
     }
 
     getCostTypes() {
-        return fetch(`/api/v1/cost-types`, {method: 'GET'}).then(rep => rep.json()).then(({data}) => {
+        return CostType.list().then(({data}) => {
             this.setState({costTypes: data})
         })
     }

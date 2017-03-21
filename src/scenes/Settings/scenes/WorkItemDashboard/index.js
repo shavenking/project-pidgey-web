@@ -5,30 +5,7 @@ import WorkItemStatsTable from 'components/WorkItemStatsTable'
 import Modal from 'components/Modal'
 import CreateWorkItemForm from 'components/CreateWorkItemForm'
 import WorkItemStatsChart from 'components/WorkItemStatsChart'
-
-const fetchWorkItems = function (workId) {
-    if (!workId) {
-        return fetch('/api/v1/work-items', {method: 'GET'}).then(rep => rep.json())
-    }
-
-    return fetch(`/api/v1/works/${workId}/work-items`, {method: 'GET'}).then(rep => rep.json())
-}
-
-const fetchWorkItemStats = function (workId) {
-    return fetch(`/api/v1/works/${workId}/work-items/stats`, {method: 'GET'}).then(rep => rep.json())
-}
-
-const createWorkItem = function (workId, form) {
-    return fetch(`/api/v1/works/${workId}/work-items`, {
-        method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify(form)
-    }).then(rep => rep.json())
-}
-
-const deleteWorkItem = function (workId, workItemId) {
-    return fetch(`/api/v1/works/${workId}/work-items/${workItemId}`, {method: 'DELETE'})
-}
+import WorkItem from 'resources/WorkItem'
 
 export default class WorkItemDashboard extends Component {
     constructor(props) {
@@ -49,13 +26,13 @@ export default class WorkItemDashboard extends Component {
     }
 
     onDelete(workItemId) {
-        deleteWorkItem(this.props.location.query.work_id, workItemId).then(() => {
+        WorkItem.delete(this.props.location.query.work_id, workItemId).then(() => {
             this.fetchData()
         })
     }
 
     onSubmit(form) {
-        createWorkItem(this.props.location.query.work_id, form).then(() => {
+        WorkItem.create(this.props.location.query.work_id, form).then(() => {
             this.fetchData()
         })
 
@@ -72,15 +49,15 @@ export default class WorkItemDashboard extends Component {
 
     fetchData() {
         const workId = this.props.location.query.work_id
-        fetchWorkItems(workId).then(({data}) => {
+        WorkItem.list(workId).then(({data}) => {
             this.setState({workItems: data})
         })
 
-        fetchWorkItemStats(workId).then(({data}) => {
+        WorkItem.stats(workId).then(({data}) => {
             this.setState({stats: data.sort((a, b) => b.sum - a.sum)})
         })
 
-        fetchWorkItems().then(({data}) => {
+        WorkItem.list().then(({data}) => {
             this.setState({suggestions: data})
         })
     }

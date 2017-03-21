@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Unit from 'resources/Unit'
 
 export default class UnitSelect extends Component {
     constructor(props) {
@@ -12,7 +13,7 @@ export default class UnitSelect extends Component {
     }
 
     getUnits() {
-        return fetch(`/api/v1/units`, {method: 'GET'}).then(rep => rep.json()).then(({data}) => {
+        return Unit.list().then(({data}) => {
             this.setState({units: data})
         })
     }

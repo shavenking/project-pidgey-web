@@ -3,6 +3,9 @@ import React, {Component} from 'react'
 import {Router, Route, IndexRoute, IndexRedirect, hashHistory} from 'react-router'
 import {WorkDashboard, WorkItemDashboard} from 'scenes/Settings'
 import Navbar from 'components/Navbar'
+import HttpClient from 'resources/HttpClient'
+
+HttpClient.setRedirector(hashHistory)
 
 class App extends Component {
     render() {
