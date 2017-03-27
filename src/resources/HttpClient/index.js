@@ -1,4 +1,6 @@
-const headers = {
+import store from 'store'
+
+let headers = {
     'content-type': 'application/json'
 }
 
@@ -7,6 +9,7 @@ let redirectUnauthorizedTo = 'login'
 
 function redirectIfUnauthorized(rep) {
     if (401 === rep.status) {
+        store.remove('token')
         redirector.push(redirectUnauthorizedTo)
 
         let error = new Error(rep.statusText)
@@ -30,7 +33,10 @@ export default class HttpClient {
     static get(url) {
         return fetch(url, {
             method: 'GET',
-            headers
+            headers: {
+                ...headers,
+                authorization: `bearer ${store.get('token')}`
+            }
         }).then(redirectIfUnauthorized).then(decodeResponseJson)
     }
 
@@ -38,14 +44,20 @@ export default class HttpClient {
         return fetch(url, {
             method: 'POST',
             body: JSON.stringify(form),
-            headers
+            headers: {
+                ...headers,
+                authorization: `bearer ${store.get('token')}`
+            }
         }).then(redirectIfUnauthorized).then(decodeResponseJson)
     }
 
     static delete(url) {
         return fetch(url, {
             method: 'DELETE',
-            headers
+            headers: {
+                ...headers,
+                authorization: `bearer ${store.get('token')}`
+            }
         }).then(redirectIfUnauthorized).then(decodeResponseJson)
     }
 
