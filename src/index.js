@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import {Router, Route, IndexRoute, IndexRedirect, hashHistory} from 'react-router'
 import {WorkDashboard, WorkItemDashboard} from 'scenes/Settings'
 import {Login, Register} from 'scenes/Auth'
+import ProjectList from 'scenes/ProjectList'
 import Navbar from 'components/Navbar'
 import HttpClient from 'resources/HttpClient'
 import store from 'store'
@@ -33,9 +34,15 @@ const checkIfTokenExists = function (nextState, replace, callback) {
 render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
-            <IndexRedirect to="settings/work-dashboard" />
+            <IndexRedirect to="projects" />
+
             <Route path="login" component={Login} />
             <Route path="register" component={Register} />
+
+            <Route path="projects" onEnter={checkIfTokenExists}>
+                <IndexRoute component={ProjectList} />
+            </Route>
+
             <Route path="settings" onEnter={checkIfTokenExists}>
                 <IndexRedirect to="work-dashboard" />
                 <Route path="work-dashboard" component={WorkDashboard} />
