@@ -4,6 +4,7 @@ import {Router, Route, IndexRoute, IndexRedirect, hashHistory} from 'react-route
 import {WorkDashboard, WorkItemDashboard} from 'scenes/Settings'
 import {Login, Register} from 'scenes/Auth'
 import ProjectList from 'scenes/ProjectList'
+import ProjectWorkDashboard from 'scenes/ProjectWorkDashboard'
 import Navbar from 'components/Navbar'
 import HttpClient from 'resources/HttpClient'
 import store from 'store'
@@ -41,6 +42,9 @@ render(
 
             <Route path="projects" onEnter={checkIfTokenExists}>
                 <IndexRoute component={ProjectList} />
+
+                <Route path=":projectId/dashboard"><IndexRedirect to="/projects/:projectId/work-dashboard" /></Route>
+                <Route path=":projectId/work-dashboard" component={ProjectWorkDashboard} />
             </Route>
 
             <Route path="settings" onEnter={checkIfTokenExists}>
