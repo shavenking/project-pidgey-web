@@ -5,6 +5,7 @@ import ProjectWork from 'resources/ProjectWork'
 import {AlertEmpty} from 'components/Alert'
 import CreateProjectWorkForm from 'components/CreateProjectWorkForm'
 import Modal from 'components/Modal'
+import Work from 'resources/Work'
 
 export default class ProjectWorkDashboard extends Component {
     constructor(props) {
@@ -18,13 +19,18 @@ export default class ProjectWorkDashboard extends Component {
 
         this.state = {
             works: [],
-            showModal: false
+            showModal: false,
+            suggestions: []
         }
     }
 
     fetchWorks() {
         ProjectWork.list(this.props.params.projectId).then(({data}) => {
             this.setState({works: data})
+        })
+
+        Work.list().then(({data}) => {
+            this.setState({suggestions: data})
         })
     }
 
@@ -62,6 +68,7 @@ export default class ProjectWorkDashboard extends Component {
                             <button type="button" className="btn btn-success mb-3" onClick={this.showModal}>新增工作項目</button>
                             <Modal show={this.state.showModal}>
                                 <CreateProjectWorkForm
+                                    suggestions={this.state.suggestions}
                                     onSubmit={this.onSubmit}
                                     onCancel={this.hideModal}
                                 >
