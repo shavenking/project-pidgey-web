@@ -89,10 +89,10 @@ export default class CreateWorkItemForm extends Component {
                         <p className="text-info">目前無相關工料項目，請繼續輸入下方資料新增工料項目！</p>
                     )}
 
-                    {!!this.state.topFiveSuggestions.length && this.state.topFiveSuggestions.map(({id, name, cost_type_name, unit_name}) => (
-                       <div className="form-check" key={id}>
+                    {!!this.state.topFiveSuggestions.length && this.state.topFiveSuggestions.map(({id, project_id, name, cost_type_name, unit_name}, idx) => (
+                       <div className="form-check" key={idx}>
                             <label className="form-check-label">
-                                <input type="radio" className="form-check-input mr-1" name="work_item_id" value={id} onChange={this.onSuggestionSelected} checked={id == this.state.selectedId} />
+                                <input type="radio" className="form-check-input mr-1" name={project_id ? 'project_work_item_id' : 'work_item_id'} value={id} onChange={this.onSuggestionSelected} checked={id == this.state.selectedId} />
                                 {name} - {unit_name} - {cost_type_name}
                             </label>
                        </div>
