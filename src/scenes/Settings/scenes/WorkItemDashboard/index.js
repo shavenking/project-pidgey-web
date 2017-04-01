@@ -72,7 +72,13 @@ export default class WorkItemDashboard extends Component {
                 <div className="col-3 col-lg-2"><SideMenu /></div>
                 <div className="col-9 col-lg-10">
                     <div className="row">
-                        <div className="col-12">
+                        <div className="col-6">
+                            <WorkItemStatsTable stats={this.state.stats} />
+                        </div>
+                        <div className="col-6">
+                            <WorkItemStatsChart stats={this.state.stats} />
+                        </div>
+                        <div className="col-12 mt-3">
                             <WorkItemTable workItems={this.state.workItems} onDelete={this.onDelete}>
                                 <button type="button" className="btn btn-success" onClick={this.openModal}>新增工料項目</button>
 
@@ -80,12 +86,6 @@ export default class WorkItemDashboard extends Component {
                                     <CreateWorkItemForm suggestions={this.state.suggestions} onCancel={this.hideModal} onSubmit={this.onSubmit} />
                                 </Modal>
                             </WorkItemTable>
-                        </div>
-                        <div className="col-6 mt-3">
-                            <WorkItemStatsTable stats={this.state.stats} />
-                        </div>
-                        <div className="col-6 mt-3">
-                            <WorkItemStatsChart stats={this.state.stats} />
                         </div>
                     </div>
                 </div>

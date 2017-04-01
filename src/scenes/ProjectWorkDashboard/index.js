@@ -6,6 +6,8 @@ import {AlertEmpty} from 'components/Alert'
 import CreateProjectWorkForm from 'components/CreateProjectWorkForm'
 import Modal from 'components/Modal'
 import Work from 'resources/Work'
+import WorkItemStatsTable from 'components/WorkItemStatsTable'
+import WorkItemStatsChart from 'components/WorkItemStatsChart'
 
 export default class ProjectWorkDashboard extends Component {
     constructor(props) {
@@ -20,7 +22,11 @@ export default class ProjectWorkDashboard extends Component {
         this.state = {
             works: [],
             showModal: false,
-            suggestions: []
+            suggestions: [],
+            stats: {
+                total: '0.00',
+                costTypes: []
+            }
         }
     }
 
@@ -31,6 +37,10 @@ export default class ProjectWorkDashboard extends Component {
 
         Work.list().then(({data}) => {
             this.setState({suggestions: data})
+        })
+
+        ProjectWork.stats(this.props.params.projectId).then(({data}) => {
+            this.setState({stats: data})
         })
     }
 
@@ -62,22 +72,40 @@ export default class ProjectWorkDashboard extends Component {
             <div className="row">
                 <div className="col-3 col-lg-2"><ProjectSideMenu projectId={projectId} /></div>
                 <div className="col-9 col-lg-10">
-                    <div className="card h-100">
-                        <div className="card-header">工作項目列表</div>
-                        <div className="card-block">
-                            <button type="button" className="btn btn-success mb-3" onClick={this.showModal}>新增工作項目</button>
-                            <Modal show={this.state.showModal}>
-                                <CreateProjectWorkForm
-                                    suggestions={this.state.suggestions}
-                                    onSubmit={this.onSubmit}
-                                    onCancel={this.hideModal}
-                                >
-                                </CreateProjectWorkForm>
-                            </Modal>
+                    <div className="row">
+                        <div className="col-12">
+                            <h2>總價 ${this.state.stats.total}</h2>
+                        </div>
+                    </div>
+                    <div className="row mt-3">
+                        <div className="col-6">
+                            <WorkItemStatsTable stats={this.state.stats.costTypes}>
+                            </WorkItemStatsTable>
+                        </div>
+                        <div className="col-6">
+                            <WorkItemStatsChart stats={this.state.stats.costTypes} />
+                        </div>
+                    </div>
+                    <div className="row mt-3">
+                        <div className="col-12">
+                            <div className="card h-100">
+                                <div className="card-header">工作項目列表</div>
+                                <div className="card-block">
+                                    <button type="button" className="btn btn-success mb-3" onClick={this.showModal}>新增工作項目</button>
+                                    <Modal show={this.state.showModal}>
+                                        <CreateProjectWorkForm
+                                            suggestions={this.state.suggestions}
+                                            onSubmit={this.onSubmit}
+                                            onCancel={this.hideModal}
+                                        >
+                                        </CreateProjectWorkForm>
+                                    </Modal>
 
-                            {hasWork || <AlertEmpty className="mb-0">請點選「新增工作項目」！</AlertEmpty>}
+                                    {hasWork || <AlertEmpty className="mb-0">請點選「新增工作項目」！</AlertEmpty>}
 
-                            {hasWork && <ProjectWorkTable works={works} onDelete={this.onDelete} />}
+                                    {hasWork && <ProjectWorkTable works={works} onDelete={this.onDelete} />}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

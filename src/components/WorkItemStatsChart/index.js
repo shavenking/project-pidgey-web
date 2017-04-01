@@ -35,7 +35,7 @@ export default class WorkItemStatsChart extends Component {
             <div className="card h-100">
                 <div className="card-header">花費類型長條圖</div>
                 <div className="card-block">
-                    {!hasData && <AlertEmpty className="mb-0">新增工料項目後，會自動產生統計圖！</AlertEmpty>}
+                    {!hasData && <AlertEmpty className="mb-0">新增資料後，會自動產生統計圖！</AlertEmpty>}
 
                     <canvas className={canvasClass} ref={component => this.canvas = component} />
                 </div>

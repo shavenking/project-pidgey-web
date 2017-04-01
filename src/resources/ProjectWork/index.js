@@ -12,4 +12,8 @@ export default class ProjectWork {
     static delete(projectId, workId) {
         return HttpClient.delete(`/api/v1/projects/${projectId}/works/${workId}`)
     }
+
+    static stats(projectId) {
+        return HttpClient.get(`/api/v1/projects/${projectId}/works/stats`)
+    }
 }
