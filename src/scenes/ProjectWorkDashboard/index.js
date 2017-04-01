@@ -74,7 +74,12 @@ export default class ProjectWorkDashboard extends Component {
                 <div className="col-9 col-lg-10">
                     <div className="row">
                         <div className="col-12">
-                            <h2>標單總價 ${this.state.stats.total}</h2>
+                            <div className="card card-inverse bg-inverse text-center">
+                                <div className="card-block">
+                                    <h3 className="card-title">${this.state.stats.total}</h3>
+                                    <p className="card-text">標單總價</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="row mt-3">
