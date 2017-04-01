@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import EngineeringTypeSelect from 'components/EngineeringTypeSelect'
+import UnitSelect from 'components/UnitSelect'
 import formSerialize from 'form-serialize'
 
 export default class CreateProjectWorkForm extends Component {
@@ -80,7 +81,7 @@ export default class CreateProjectWorkForm extends Component {
                         <p className="text-info">目前無相關資料，請繼續輸入下方資料新增！</p>
                     )}
 
-                    {!!this.state.topFiveSuggestions.length && this.state.topFiveSuggestions.map(({id, name, engineering_type, amount, unit_price}, idx) => (
+                    {!!this.state.topFiveSuggestions.length && this.state.topFiveSuggestions.map(({id, name, engineering_type, amount, unit_price, unit}, idx) => (
                        <div className="form-check" key={idx}>
                             <label className="form-check-label">
                                 <input
@@ -91,7 +92,7 @@ export default class CreateProjectWorkForm extends Component {
                                     onChange={this.onSuggestionSelected}
                                     checked={id == this.state.selectedId}
                                 />
-                                {name}, 總價約 ${amount * unit_price}, {engineering_type.main_title} - {engineering_type.detailing_title}
+                                {name}, 單價約 ${unit_price}/{unit.name}, {engineering_type.main_title} - {engineering_type.detailing_title}
                             </label>
                        </div>
                     ))}
@@ -100,6 +101,11 @@ export default class CreateProjectWorkForm extends Component {
                     <label>數量</label>
                     <input type="text" className="form-control" name="amount" autoComplete="off" />
                 </div>
+                {!!this.state.selectedId || (
+                    <UnitSelect>
+                        <label>請選擇單位：</label>
+                    </UnitSelect>
+                )}
                 {!!this.state.selectedId || (
                     <div className="form-group">
                         <label>工程類別</label>

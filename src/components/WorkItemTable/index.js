@@ -36,7 +36,6 @@ export default class WorkItemTable extends Component {
                                     <th>名稱</th>
                                     <th>數量</th>
                                     <th>單價</th>
-                                    <th>單位</th>
                                     <th>花費類型</th>
                                     <th></th>
                                 </tr>
@@ -46,8 +45,7 @@ export default class WorkItemTable extends Component {
                                     <tr key={id}>
                                         <td>{name}</td>
                                         <td>{amount}</td>
-                                        <td>{unit_price}</td>
-                                        <td>{unit_name}</td>
+                                        <td>${unit_price}/{unit_name}</td>
                                         <td>{cost_type_name}</td>
                                         <td>
                                             <div className="btn-group btn-group-sm">

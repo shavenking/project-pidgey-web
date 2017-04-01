@@ -5,6 +5,7 @@ import Modal from 'components/Modal'
 import formSerialize from 'form-serialize'
 import Work from 'resources/Work'
 import EngineeringTypeSelect from 'components/EngineeringTypeSelect'
+import UnitSelect from 'components/UnitSelect'
 
 export default class WorkTable extends Component {
     constructor(props) {
@@ -78,7 +79,6 @@ export default class WorkTable extends Component {
                             <thead>
                                 <tr>
                                     <th>名稱</th>
-                                    <th>數量</th>
                                     <th>單價</th>
                                     <th>工程類別</th>
                                     <th></th>
@@ -86,11 +86,10 @@ export default class WorkTable extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.works.map(({id, name, amount, unit_price, engineering_type}) => (
+                                {this.state.works.map(({id, name, unit_price, engineering_type, unit}) => (
                                     <tr key={id}>
                                         <td>{name}</td>
-                                        <td>{amount}</td>
-                                        <td>{unit_price}</td>
+                                        <td>${unit_price}/{unit.name}</td>
                                         <td>{engineering_type.main_title} - {engineering_type.detailing_title}</td>
                                         <td><Link to={`settings/work-item-dashboard?work_id=${id}`}>單價分析表</Link></td>
                                         <td>
@@ -116,6 +115,9 @@ export default class WorkTable extends Component {
                                 <label>數量</label>
                                 <input type="text" className="form-control" name="amount" autoComplete="off" />
                             </div>
+                            <UnitSelect>
+                                <label>請選擇單位：</label>
+                            </UnitSelect>
                             <div className="form-group">
                                 <label>工程類別</label>
                                 <EngineeringTypeSelect />

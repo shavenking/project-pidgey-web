@@ -23,7 +23,7 @@ export default class WorkItemStatsTable extends Component {
                                 {this.props.stats.map(stats => (
                                     <tr key={stats.cost_type_id}>
                                         <td>{stats.cost_type_name}</td>
-                                        <td>{stats.sum}</td>
+                                        <td>${stats.sum}</td>
                                     </tr>
                                 ))}
                             </tbody>

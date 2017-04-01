@@ -34,12 +34,12 @@ export default class ProjectWorkTable extends Component {
                 </thead>
                 <tbody>
                     {works.map(({
-                        id, project_id, name, amount, unit_price, engineering_type, engineering_type_main_title, engineering_type_detailing_title
+                        id, project_id, name, amount, unit_price, engineering_type, engineering_type_main_title, engineering_type_detailing_title, unit_name
                     }) => (
                         <tr key={id}>
                             <td>{name}</td>
                             <td>{amount}</td>
-                            <td>{unit_price}</td>
+                            <td>${unit_price}/{unit_name}</td>
                             <td>{engineering_type_main_title} - {engineering_type_detailing_title}</td>
                             <td><Link to={`/projects/${project_id}/works/${id}/work-item-dashboard`}>單價分析表</Link></td>
                             <td>
