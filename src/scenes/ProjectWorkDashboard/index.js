@@ -74,7 +74,7 @@ export default class ProjectWorkDashboard extends Component {
                 <div className="col-9 col-lg-10">
                     <div className="row">
                         <div className="col-12">
-                            <h2>總價 ${this.state.stats.total}</h2>
+                            <h2>標單總價 ${this.state.stats.total}</h2>
                         </div>
                     </div>
                     <div className="row mt-3">

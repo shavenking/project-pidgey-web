@@ -15,7 +15,7 @@ export default class ProjectSideMenu extends Component {
                                 to={`/projects/${projectId}/work-dashboard`}
                                 className="nav-link"
                                 activeClassName="active"
-                            >工作項目</Link>
+                            >標單管理</Link>
                         </li>
                     </ul>
                 </div>
