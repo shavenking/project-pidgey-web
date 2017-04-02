@@ -111,10 +111,6 @@ export default class WorkTable extends Component {
                                 <label>名稱</label>
                                 <input type="text" className="form-control" name="name" autoComplete="off" />
                             </div>
-                            <div className="form-group">
-                                <label>數量</label>
-                                <input type="text" className="form-control" name="amount" autoComplete="off" />
-                            </div>
                             <UnitSelect>
                                 <label>請選擇單位：</label>
                             </UnitSelect>
